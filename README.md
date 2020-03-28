@@ -1,5 +1,5 @@
 # 教学立方图片预览插件
- A Chrome extension to preview images in teaching.applysquare.com
+ A Chrome extension to preview images at teaching.applysquare.com
 
 ## 原理
 
