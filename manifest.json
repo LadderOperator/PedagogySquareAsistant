@@ -1,0 +1,22 @@
+{
+    "name": "教学立方图片预览",
+    "version": "1.0",
+    "description": "天下苦教学立方久矣！做此插件以便助教老师们可以直接网页预览学生上传的图片！",
+
+    "background": {
+      "persistent": false,
+      "scripts": ["background.js"],
+      "all_frames":false
+    },
+    "browser_action": {
+      "default_icon": "logo.png",
+      "icons":"logo.png"
+    },
+    "web_accessible_resources": [
+      "catchHomework.js"
+    ],
+
+    "permissions": ["activeTab"],
+    "manifest_version": 2
+
+  }
