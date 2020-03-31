@@ -1,7 +1,7 @@
 {
-    "name": "教学立方图片预览",
-    "version": "1.0",
-    "description": "天下苦教学立方久矣！做此插件以便助教老师们可以直接网页预览学生上传的图片！",
+    "name": "教学立方辅助工具",
+    "version": "1.1",
+    "description": "天下苦教学立方久矣！做此插件以方便无论老师还是同学！",
 
     "background": {
       "persistent": false,
