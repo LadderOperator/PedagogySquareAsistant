@@ -41,12 +41,8 @@ if (currentURL.includes(TWorkStr)) {
         attachInfo.push(fExt)
         attachInfo.push(tmpURL)
 
-        for (let k = 0; k < attachElements.length; k++) {
-          if (attachElements[k].textContent.indexOf(fName) > -1){
-            attachInfo.push(attachElements[k])
-          }
+        attachInfo.push(attachElements[j])
           
-        }
         if ('jpg|jpeg|png|gif'.indexOf(fExt.toLowerCase()) > -1 ) {
           imgLinks.push(attachInfo)
         }else {
