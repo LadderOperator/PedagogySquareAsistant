@@ -4,56 +4,55 @@ var currentURL = window.location.href;
 var lessonStr = "S-Lesson-index"
 var TWorkStr = "T-Work-treviewinfo"
 
+/* 根据当前页面选择执行不同功能 */
+
 if (currentURL.includes(TWorkStr)) {
 
-  rate = document.getElementsByClassName('caozuo')[0]
-  rate.setAttribute("style", "position:unset;text-align:right;");
-  
-  var teachername = ""
 
-  var homeworkPara = homework.question_list
+  
+  /*未来加入设置选项功能*/
+
+  var teachername = ""
 
   var gatherRate = []
 
-  rate.addEventListener('click',function () {
-    document.querySelector('.teacherRating-content > span > textarea').value = gatherRate.join('；')
-  })
+  /* 捕捉附件列表 */
 
-  console.log("捕捉到作业文件")
-
-  //console.log(homeworkPara)
-
+  var homeworkPara = homework.question_list
   var questionCount = homeworkPara.length
-
-  //console.log(questionCount)
+  
 
   var fileLinks = []
   var imgLinks = []
           
-  var attachElements = document.querySelectorAll('div.records-exam-section.s-work-section > div > div > div:not(.change) > a')
+  var attachElements = document.querySelectorAll('div.records-exam-section.s-work-section > div > div > div:not(.change) > a') //捕捉附件
 
-  var imgInserted = document.querySelectorAll('div.records-exam-section.s-work-section > div > div img:not(.previewImg)')
+  var imgInserted = document.querySelectorAll('div.records-exam-section.s-work-section > div > div img:not(.previewImg)') //捕捉插入图片
 
-  //console.log(attachElements)
 
   for (let i = 0; i < questionCount; i++) {
-          
+    
+    if (!homeworkPara[i].answer_record.hasOwnProperty('attach_info')) {
+      continue 
+    }
+    console.log("捕捉到作业附件")
     var attachment = homeworkPara[i].answer_record.attach_info
 
     var attachCount = attachment.length
     for (let j = 0; j < attachCount; j++) {
       var attachInfo = []
 
-      var fName = attachment[j].filename
-      var tmpURL = attachment[j].path
-      var fExt = attachment[j].ext
+      var fName = attachment[j].filename //文件名
+      var tmpURL = attachment[j].path //文件实际下载路径
+      var fExt = attachment[j].ext //文件扩展名
 
       attachInfo.push(fName)
       attachInfo.push(fExt)
       attachInfo.push(tmpURL)
 
-      attachInfo.push(attachElements[j])
-        
+      attachInfo.push(attachElements[j])//附件所属<a>元素
+      
+      /* 附件分类 */
       if ('jpg|jpeg|png|gif'.indexOf(fExt.toLowerCase()) > -1 ) {
         imgLinks.push(attachInfo)
       }else {
@@ -63,7 +62,7 @@ if (currentURL.includes(TWorkStr)) {
     }
   }
 
-  
+  /* 为所有插入的图片套上一层canvas */
   
   for (let imgIndex = 0; imgIndex < imgInserted.length; imgIndex++) {
     var imgCanvas = document.createElement('canvas')
@@ -79,6 +78,8 @@ if (currentURL.includes(TWorkStr)) {
 
     imgs.parentNode.removeChild(imgs)
 
+    /* 在canvas绘制图片内容 */
+
     img2.onload = function(){
 
       imgctx2 = this.parentElement.getContext('2d')
@@ -90,6 +91,9 @@ if (currentURL.includes(TWorkStr)) {
     }
     
     imgCanvas.parentElement.insertBefore(document.createElement('br'), imgCanvas)
+
+    /* 单击选装功能 */
+
     imgCanvas.addEventListener('click', function () {
       var currentDeg = parseInt((/[0-9]+/i).exec(this.className))
       var newDeg = (currentDeg + 90) % 360
@@ -140,6 +144,8 @@ if (currentURL.includes(TWorkStr)) {
 
     })
 
+    /* 为每个图片下方添加评语框 */
+
     var inbox2 = document.createElement('textarea')
     inbox2.className = 'ratebox'
     inbox2.placeholder = '点击可以在这里记录本题评语！'
@@ -157,7 +163,12 @@ if (currentURL.includes(TWorkStr)) {
     imgCanvas.parentElement.insertBefore(document.createElement('br'), imgCanvas.nextSibling)
   }
 
+  /* 处理上传附件的列表 */
+
   imgLinks.forEach(function (link) {
+
+    /* 添加评语框 */
+
     var inbox = document.createElement('textarea')
     inbox.className = 'ratebox'
     inbox.placeholder = '点击可以在这里记录本题评语！'
@@ -171,6 +182,8 @@ if (currentURL.includes(TWorkStr)) {
       }
 
     })
+
+    /* 创建canvas并在其中绘制图片 */
 
     var br1 = document.createElement('br')
     var br2 = document.createElement('br')
@@ -244,13 +257,29 @@ if (currentURL.includes(TWorkStr)) {
     link[3].parentNode.insertBefore(br2, link[3].nextSibling)
   })
 
+  /* 为非图片替换原先的下载链接 */
+
   fileLinks.forEach(function (link) {
     link[3].href = link[2]
     link[3].target = '_blank'
   })
 
+  /* 评阅按钮移动到底部 */
+  
+  rateStyle = document.createElement('style')
+
+  rateStyle.innerHTML = ".caozuo { position:static!important; right:0px!important; top:0px!important;text-align: right!important}"
+  document.head.appendChild(rateStyle)
+
+  /* 收集评语 */
+  rateButton = document.querySelector('.caozuo')
+  rateButton.addEventListener('click',function () {
+    document.querySelector('.teacherRating-content > span > textarea').value = gatherRate.join('；')
+  })
+
 }
 
+/* 学生功能，显示课件的下载按键 */
 
 if (currentURL.includes(lessonStr)) {
   var resource = lessonindex.lesson_list
