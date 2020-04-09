@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+
+<head>
+    <title>教学立方辅助工具设置</title>
+</head>
+
+<style type="text/css">
+    .option_panel {
+        margin-top: 10px;
+        margin-right: 15px;
+        margin-left: 15px;
+        padding: 10px 20px 10px 20px;
+    }
+
+    .title_1 {
+        margin-bottom: 15px;
+    }
+
+    .title_2 {
+        margin-bottom: 15px;
+    }
+
+    .item {
+        margin: 5px 0px 5px 0px;
+        vertical-align: middle;
+    }
+
+    .item>input {
+        vertical-align: middle;
+    }
+
+    .item>span:not(.explanation) {
+        vertical-align: middle;
+        margin-left: 5px;
+    }
+    .item>.explanation {
+        height: 14px;
+        width: 14px;
+        vertical-align: middle;
+    }
+
+
+    hr {
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+
+    #b_area {
+        text-align: center;
+    }
+
+    #b_area>button {
+        margin: 5px 15px 0 15px;
+        padding: 5px 15px 5px 15px;
+    }
+
+    #info {
+        font-style: italic;
+    }
+</style>
+
+<body>
+    <div>
+
+        <div class="option_panel">
+            <h1 id="title" class="title_1">设置</h1>
+
+            <div>
+                <form>
+                    <div class="item"><input class="cbox" type="checkbox" id="default_apply">
+                        <img class="explanation" src="question.png" title="开启后，无需点击插件图标，网页加载后自动应用功能">
+
+                        <span>开启默认加载模式</span>
+                    </div>
+
+                    <hr>
+
+                    <h2 class="title_2">老师/助教功能</h2>
+
+                    <div class="item">
+                        <input class="cbox" type="checkbox" id="preview_image">
+                        <img class="explanation" src="question.png" title="上传格式为png/jpg/jpeg/gif格式的图片直接预览">
+                        <span>预览图片附件</span>
+                    </div>
+
+                    <div class="item">
+                        <input class="cbox" type="checkbox" id="rotate_image">
+                        <img class="explanation" src="question.png" title="左键图片（无论是附件预览还是原先插入的），可以直接旋转">
+                        <span>允许旋转图片</span>
+                    </div>
+
+                    <div class="item">
+                        <input class="cbox" type="checkbox" id="move_ratebutton">
+                        <img class="explanation" src="question.png" title="将“评阅”按钮移动至页面答题区域右下方，改完作业可以直接看见">
+                        <span>优化“评阅”按钮位置</span>
+                    </div>
+
+                    <div class="item">
+                        <input class="cbox" type="checkbox" id="use_ratebox">
+                        <img class="explanation" src="question.png"  title="为每个图片下方添加笔记框，自动汇总到评阅">
+                        <span>分散评阅</span>
+                    </div>
+
+                    <div class="item">
+                        <input class="cbox" type="checkbox" id="add_signature">
+                        <img class="explanation" src="question.png" title="在总评后面添加一段类似个人签名的文字，非常适合用于标记批改人">
+                        <span>评阅后缀：</span>
+                        <input type="text" class="sbox" id="signature" autocomplete="off">
+                    </div>
+
+
+                    <hr>
+
+                    <h2 class="title_2">学生功能</h2>
+
+                    <div class="item">
+                        <input class="cbox" type="checkbox" id="download_lesson">
+                        <img class="explanation" src="question.png" title="显示课件“下载”按钮并转变为真实下载链接，可配合 DownThemAll! 等批量下载工具使用">
+                        <span>真实下载链接</span>
+                    </div>
+                </form>
+            </div>
+
+            <hr>
+
+            <div id="b_area">
+                <button id="save">保存</button>
+                <button id="reset">默认</button>
+            </div>
+
+            <div id="status">
+                <p id="info">当前状态：未保存。</p>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="options.js"></script>
+
+</html>

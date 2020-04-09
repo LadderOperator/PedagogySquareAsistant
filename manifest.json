@@ -5,9 +5,22 @@
 
     "background": {
       "persistent": false,
-      "scripts": ["background.js"],
+      "scripts" : ["background.js"],
       "all_frames":false
     },
+
+    "content_scripts":[
+      {
+          "run_at":"document_end",
+          "matches":[
+              "*://teaching.applysquare.com/*"
+          ],
+          "js":[
+             "contentscript.js"
+          ]
+      }
+  ],
+
     "browser_action": {
       "default_icon": "logo.png",
       "icons":"logo.png"
@@ -15,8 +28,15 @@
     "web_accessible_resources": [
       "catchHomework.js"
     ],
-
-    "permissions": ["activeTab"],
+    "options_ui":{
+      "page": "options.html",
+      "chrome_style": true
+    },
+    "permissions": [
+      "activeTab",
+      "storage",
+      "contextMenus"
+    ],
     "manifest_version": 2
 
   }

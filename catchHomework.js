@@ -285,8 +285,12 @@ if (currentURL.includes(lessonStr)) {
   var resource = lessonindex.lesson_list
   console.log("捕捉到课件文件")
 
+  var lesson_items = document.querySelectorAll("tbody > tr")
+
   for (let ri = 0; ri < resource.length; ri++) {
     resource[ri].can_download = 1
+    lesson_url = lesson_items[ri].lastElementChild.lastElementChild
+    lesson_url.href = resource[ri].path
   }
 }
 
