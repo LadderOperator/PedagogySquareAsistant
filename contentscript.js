@@ -1,31 +1,88 @@
-var extensionOrigin = 'chrome-extension://' + chrome.runtime.id
+function debug(param) {
+  if (globalDebugMode) {
+      console.log(param)
+  }
+}
 
-if (!location.ancestorOrigins.contains(extensionOrigin) ) {
+function hasContentscripts() {
+    var extension = chrome.runtime.id
+    var script = document.querySelectorAll("script[src*=" + extension + "]") 
+    return script.length > 0
+}
 
-  var s = document.createElement('script');
-  
-  s.src = chrome.runtime.getURL('catchHomework.js');
-  document.getElementsByTagName('body')[0].appendChild(s);
+function rmContentscripts() {
+  var extension = chrome.runtime.id
+  var script = document.querySelectorAll("script[src*=" + extension + "]") 
+  script[0].remove()
+}
 
-  chrome.runtime.sendMessage("done", function(response){
+function injectScripts() {
 
-    console.log("[Send][contentscripts->background] Ready for work.")
-    console.log(response)
+  var extensionOrigin = 'chrome-extension://' + chrome.runtime.id
 
-  })  
+  if (!location.ancestorOrigins.contains(extensionOrigin)) {
+
+    ctrlElement = document.createElement('p')
+    ctrlElement.id = 'opt_data'
+    ctrlElement.textContent = settings
+    ctrlElement.style.display = "none"
+    document.getElementsByTagName('body')[0].appendChild(ctrlElement)
+
+
+    var s = document.createElement('script')
+    s.src = chrome.runtime.getURL('catchHomework.js')
+    document.getElementsByTagName('body')[0].appendChild(s)
+
+    chrome.runtime.sendMessage("done", function(response){
+
+      debug("[Send][contentscripts->background] Ready for work.")
+      debug(response)
+
+    })  
+
+  }
+
+}
+
+function updateContentVar(message, sender, sendResponse){
+  if ('update' == message.cmd){
+
+    settings = message.info
+
+    sendResponse(sender,"[Recv][contentscripts->background] I'm updated.")
+    injectScripts()
+    
+  }
+
+}
+
+function reqBgUpdate(params) {
+  chrome.runtime.sendMessage("wakeup", function(response){
+    debug("[Send][contentscript->background] Wake up!")
+    //debug(response)
+  })
+}
+
+
+var settings
+var globalDebugMode = true
+
+
+if (hasContentscripts()) {
+
+  debug("[Info] Already run, do again.")
+  rmContentscripts()
+  reqBgUpdate()
+  chrome.runtime.onMessage.addListener(updateContentVar)
+
+}else{
+
+  reqBgUpdate()
+  chrome.runtime.onMessage.addListener(updateContentVar)
 
 }
 
 
-chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
-  if ('update' == message.cmd){
 
-    sendResponse(sender,"[Recv][contentscripts->background] I'm updated.")
-  }
 
-})
 
-chrome.runtime.sendMessage("wakeup", function(response){
-  console.log("[Send][contentscript->background] Wake up!")
-  console.log(response)
-})
