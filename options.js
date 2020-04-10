@@ -13,7 +13,7 @@ function form_update() {
 
   sText.disabled = !addSign.checked
 
-  console.log("Update form.")
+  console.log("[Info][options] Update form.")
 
 }
 
@@ -42,7 +42,7 @@ function save_options() {
     status.textContent = '当前状态：已保存。请刷新教学立方网页以生效。'
   })
 
-  console.log("Save settings.")
+  console.log("[Info][options] Save settings.")
 
 }
   
@@ -54,13 +54,13 @@ function reset_options() {
   document.getElementById('rotate_image').checked = true
   document.getElementById('move_ratebutton').checked = true
   document.getElementById('use_ratebox').checked = false
-  document.getElementById('add_signature').checked = true
+  document.getElementById('add_signature').checked = false
   document.getElementById('signature').value = "（张三 批改）"
   document.getElementById('download_lesson').checked = true
 
   var status = document.getElementById('info')
   status.textContent = '当前状态：未保存。'
-  console.log("Reset settings.")
+  console.log("[Info][options] Reset settings.")
 
   form_update()
 
@@ -75,7 +75,7 @@ function load_options() {
     if ('{}' === JSON.stringify(items)){
             
       /* 第一次运行设置 */
-      console.log("No settings, perhaps first run.")
+      console.log("[Info][options] First run.")
 
       document.getElementById('title').textContent = "欢迎使用！第一次使用请设置："
       document.getElementById('default_apply').checked = false
@@ -83,11 +83,11 @@ function load_options() {
       document.getElementById('rotate_image').checked = true
       document.getElementById('move_ratebutton').checked = true
       document.getElementById('use_ratebox').checked = false
-      document.getElementById('add_signature').checked = true
+      document.getElementById('add_signature').checked = false
       document.getElementById('signature').value = "（张三 批改）"
       document.getElementById('download_lesson').checked = true
 
-      save_options()
+      save_options()//强制保存一次默认设置
 
       form_update()//异步加载，必须要分别加上
   

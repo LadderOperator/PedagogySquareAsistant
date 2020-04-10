@@ -6,9 +6,12 @@ if (!location.ancestorOrigins.contains(extensionOrigin) ) {
   
   s.src = chrome.runtime.getURL('catchHomework.js');
   document.getElementsByTagName('body')[0].appendChild(s);
-  chrome.runtime.sendMessage("Done", function(response){
-    console.log("ContentScript:OK!")
+
+  chrome.runtime.sendMessage("done", function(response){
+
+    console.log("[Send][contentscripts->background] Ready for work.")
     console.log(response)
+
   })  
 
 }
@@ -16,12 +19,13 @@ if (!location.ancestorOrigins.contains(extensionOrigin) ) {
 
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
   if ('update' == message.cmd){
-    sendResponse(sender,"ContentScript:Got it!")
+
+    sendResponse(sender,"[Recv][contentscripts->background] I'm updated.")
   }
 
 })
 
 chrome.runtime.sendMessage("wakeup", function(response){
-  console.log("Send wakeup")
+  console.log("[Send][contentscript->background] Wake up!")
   console.log(response)
 })
