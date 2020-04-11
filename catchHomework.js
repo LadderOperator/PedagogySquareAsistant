@@ -226,10 +226,24 @@ function collectRates() {
   var rateButton = document.querySelector('.caozuo')
   rateButton.addEventListener('click',function () {
      var combinedRates = settings.enableSignature ? gatherRate.join('；') + signature : gatherRate.join('；')
-     document.querySelector('.teacherRating-content > span > textarea').value = combinedRates
+     if ("" == document.querySelector('.teacherRating-content > span > textarea').value.replace(/\s*/g,"")){
+      document.querySelector('.teacherRating-content > span > textarea').value = combinedRates
+     }
+
   })
 }
 
+function sign() {
+  var rateButton = document.querySelector('.caozuo')
+  rateButton.addEventListener('click',function () {
+  
+    if ("" == document.querySelector('.teacherRating-content > span > textarea').value.replace(/\s*/g,"")){
+      document.querySelector('.teacherRating-content > span > textarea').value = signature
+     }
+
+ })
+
+}
 
 
 
@@ -326,6 +340,10 @@ if (currentURL.includes(TWorkStr)) {
   /* 收集评语 */
   if (settings.enableRateBox) {
     collectRates(gatherRate)
+  }
+
+  if (settings.enableSignature){
+    sign()
   }
 
   if (settings.enableHideSrv){
