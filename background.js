@@ -58,15 +58,13 @@ function clickMode(id) {
 function clickModeScript() {
 
     /* 点击模式 */
-    /* 监听按钮点击事件，是对应网站则执行 */
 
-    if (bgMode){
+    if (chrome.tabs.onUpdated.hasListener(setBgMode)){
         chrome.tabs.onUpdated.removeListener(setBgMode)
-        chrome.browserAction.onClicked.addListener(setClickMode)
-        bgMode = false
     }
 
-    
+    chrome.browserAction.onClicked.addListener(setClickMode)
+    bgMode = false
 }
 
 function setBgMode(id, change, tab) {
@@ -106,12 +104,10 @@ function backgroundModeScript(id) {
 
     /* 背景模式 */
 
-    if (!bgMode){
+    if (chrome.browserAction.onClicked.hasListener(setClickMode)){
         chrome.browserAction.onClicked.removeListener(setClickMode)
-        chrome.tabs.onUpdated.addListener(setBgMode)
-        bgMode = true
     }
-
+    chrome.tabs.onUpdated.addListener(setBgMode)
     
 }
 
@@ -285,6 +281,8 @@ chrome.contextMenus.onClicked.addListener(function (callback) {
     }
 })
 
+var storage
+
 /* 第一次运行设置，当然这个基本没用 */
 
 chrome.runtime.onInstalled.addListener(function (details) {
@@ -310,16 +308,8 @@ chrome.runtime.onInstalled.addListener(function (details) {
 })
 
 var globalDebugMode = true
-var bgMode
-var storage
+
 
 loadSettings()//载入
-
-chrome.storage.sync.get("settings", function (items) {
-
-    bgMode = JSON.parse(items.settings).enableBgMode
-
-    debug(bgMode)
-})
 
 setIcon()//设置图标规则

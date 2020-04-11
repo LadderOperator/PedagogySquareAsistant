@@ -201,6 +201,14 @@ function showPreviewImg(link) {
   link[3].parentNode.insertBefore(br1, link[3].nextSibling)
   link[3].parentNode.insertBefore(canvas, link[3].nextSibling)
   link[3].parentNode.insertBefore(br2, link[3].nextSibling)
+
+  if (settings.enableImageRotation) {
+    setImgRotate(canvas,"previewImg-")
+  }
+
+  if (settings.enableRateBox) {
+    addImgRateBox(canvas)
+  }
 }
 
 function moveRateButton() {
@@ -269,9 +277,6 @@ if (currentURL.includes(TWorkStr)) {
   /* 处理上传附件的列表 */
 
   imgLinks.forEach(function (link) {
-    /* 添加评语框 */
-    addImgRateBox(link[3])
-    
 
     
 
@@ -292,12 +297,15 @@ if (currentURL.includes(TWorkStr)) {
     link[3].parentNode.insertBefore(inbox, link[3].nextSibling) */
     /* 创建canvas并在其中绘制图片 */
 
+
+
     if (settings.enableImagePreview) {
+      
       showPreviewImg(link)
+    
     }
-    if (settings.enableImageRotation) {
-      setImgRotate(canvas,"previewImg-")
-    }
+    
+
 
 
   })
