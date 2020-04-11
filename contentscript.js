@@ -45,15 +45,15 @@ function injectScripts() {
 }
 
 function updateContentVar(message, sender, sendResponse) {
-  if ('update' == message.cmd) {
 
-    settings = message.info
+    if ('update' == message.cmd) {
 
-    sendResponse(sender, "[Recv][contentscripts->background] I'm updated.")
-    injectScripts()
-
-
-  }
+      settings = message.info
+  
+      sendResponse(sender, "[Recv][contentscripts->background] I'm updated.")
+      
+      injectScripts()
+    }
 
 }
 

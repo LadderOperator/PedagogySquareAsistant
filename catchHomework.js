@@ -7,6 +7,7 @@ function debug(param) {
 
 function getAttachment() {
 
+
   /* 
   获取页面的附件信息
   */
@@ -223,8 +224,7 @@ function hideSrvBtn() {
 }
 
 function collectRates() {
-  var rateButton = document.querySelector('.caozuo')
-  rateButton.addEventListener('click', function () {
+  document.querySelector('.caozuo').addEventListener('click', function () {
     var combinedRates = settings.enableSignature ? gatherRate.join('；') + signature : gatherRate.join('；')
     if ("" == document.querySelector('.teacherRating-content > span > textarea').value.replace(/\s*/g, "")) {
       document.querySelector('.teacherRating-content > span > textarea').value = combinedRates
@@ -234,8 +234,7 @@ function collectRates() {
 }
 
 function sign() {
-  var rateButton = document.querySelector('.caozuo')
-  rateButton.addEventListener('click', function () {
+document.querySelector('.caozuo').addEventListener('click', function () {
 
     if ("" == document.querySelector('.teacherRating-content > span > textarea').value.replace(/\s*/g, "")) {
       document.querySelector('.teacherRating-content > span > textarea').value = signature
@@ -246,25 +245,16 @@ function sign() {
 }
 
 
+function mainPart() {
 
-
-var globalDebugMode = true
-
-var settings = JSON.parse(document.getElementById('opt_data').textContent)
-
-var currentURL = window.location.href;
-var lessonStr = "S-Lesson-index"
-var TWorkStr = "T-Work-treviewinfo"
 
 /* 根据当前页面选择执行不同功能 */
 
 if (currentURL.includes(TWorkStr)) {
-
+/* 
   var signature = settings.signatureText
 
   var gatherRate = []
-
-  /* 捕捉附件列表 */
 
   var homeworkPara = homework.question_list
   var questionCount = homeworkPara.length
@@ -272,11 +262,11 @@ if (currentURL.includes(TWorkStr)) {
   var gatherRate = []
 
   var fileLinks = []
-  var imgLinks = []
+  var imgLinks = [] */
 
-  var attachElements = document.querySelectorAll('div.records-exam-section.s-work-section > div > div > div:not(.change) > a') //捕捉附件
+  attachElements = document.querySelectorAll('div.records-exam-section.s-work-section > div > div > div:not(.change) > a') //捕捉附件
 
-  var imgInserted = document.querySelectorAll('div.records-exam-section.s-work-section > div > div img:not(.previewImg)') //捕捉插入图片
+  imgInserted = document.querySelectorAll('div.records-exam-section.s-work-section > div > div img:not(.previewImg)') //捕捉插入图片
 
 
   /* 捕捉作业附件 */
@@ -393,3 +383,30 @@ if (currentURL.includes(lessonStr)) {
 
 }
 
+}
+
+
+var globalDebugMode = true
+var settings = JSON.parse(document.getElementById('opt_data').textContent)
+var currentURL = window.location.href;
+var lessonStr = "S-Lesson-index"
+var TWorkStr = "T-Work-treviewinfo"
+var signature = settings.signatureText
+var gatherRate = []
+var homeworkPara
+var questionCount
+var rateboxes = []
+var gatherRate = []
+var fileLinks = []
+var imgLinks = []
+var attachElements
+var imgInserted
+
+try {
+  mainPart()
+  debug("[Info] Done.")
+} catch (error) {
+  debug("[Info] Wait.")
+  window.setTimeout(mainPart, 1000)
+  debug("[Info] Done.")
+}
