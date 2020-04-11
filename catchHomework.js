@@ -392,12 +392,12 @@ if (currentURL.includes(TWorkStr)) {
 
 if (currentURL.includes(lessonStr)) {
 
-  var resource = lessonindex.lesson_list
+  resource = lessonindex.lesson_list
 
   if (settings.enableDownload) {
     showDlBtn()
     var interval = 100;
-    var oldPage = parseInt(document.querySelector(".pagination .active").textContent)//获取当前列表页
+    oldPage = parseInt(document.querySelector(".pagination .active").textContent)//获取当前列表页
     window.setInterval(checkPage, interval)//间隔判断当期页面是否发生改变
   }
 
@@ -428,6 +428,8 @@ var fileLinks = []
 var imgLinks = []
 var attachElements
 var imgInserted
+var resource 
+var oldPage
 
 try {
   mainPart()
