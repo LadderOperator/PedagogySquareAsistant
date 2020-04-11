@@ -1,18 +1,18 @@
 function debug(param) {
   if (globalDebugMode) {
-      console.log(param)
+    console.log(param)
   }
 }
 
 function hasContentscripts() {
-    var extension = chrome.runtime.id
-    var script = document.querySelectorAll("script[src*=" + extension + "]") 
-    return script.length > 0
+  var extension = chrome.runtime.id
+  var script = document.querySelectorAll("script[src*=" + extension + "]")
+  return script.length > 0
 }
 
 function rmContentscripts() {
   var extension = chrome.runtime.id
-  var script = document.querySelectorAll("script[src*=" + extension + "]") 
+  var script = document.querySelectorAll("script[src*=" + extension + "]")
   script[0].remove(script)
 }
 
@@ -33,32 +33,32 @@ function injectScripts() {
     s.src = chrome.runtime.getURL('catchHomework.js')
     document.getElementsByTagName('body')[0].appendChild(s)
 
-    chrome.runtime.sendMessage("done", function(response){
+    chrome.runtime.sendMessage("done", function (response) {
 
       debug("[Send][contentscripts->background] Ready for work.")
       debug(response)
 
-    })  
+    })
 
   }
 
 }
 
-function updateContentVar(message, sender, sendResponse){
-  if ('update' == message.cmd){
+function updateContentVar(message, sender, sendResponse) {
+  if ('update' == message.cmd) {
 
     settings = message.info
 
-    sendResponse(sender,"[Recv][contentscripts->background] I'm updated.")
+    sendResponse(sender, "[Recv][contentscripts->background] I'm updated.")
     injectScripts()
-    
-    
+
+
   }
 
 }
 
 function reqBgUpdate(params) {
-  chrome.runtime.sendMessage("wakeup", function(response){
+  chrome.runtime.sendMessage("wakeup", function (response) {
     debug("[Send][contentscript->background] Wake up!")
     //debug(response)
   })
@@ -76,7 +76,7 @@ if (hasContentscripts()) {
   reqBgUpdate()
   chrome.runtime.onMessage.addListener(updateContentVar)
 
-}else{
+} else {
 
   reqBgUpdate()
   chrome.runtime.onMessage.addListener(updateContentVar)

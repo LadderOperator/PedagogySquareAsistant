@@ -1,6 +1,6 @@
 function debug(param) {
   if (globalDebugMode) {
-      console.log(param)
+    console.log(param)
   }
 }
 
@@ -28,7 +28,7 @@ function form_update() {
 
 
 function save_options() {
-  
+
   var storage = {}
 
   storage.enableBgMode = document.getElementById('default_apply').checked
@@ -47,15 +47,15 @@ function save_options() {
   chrome.storage.sync.set({
     "settings": JSON.stringify(storage)
   }
-  ,function () {
-    var status = document.getElementById('info')
-    status.textContent = '当前状态：已保存。请刷新教学立方网页重新载入以生效。'
-  })
+    , function () {
+      var status = document.getElementById('info')
+      status.textContent = '当前状态：已保存。请刷新教学立方网页重新载入以生效。'
+    })
 
   debug("[Info][options] Save settings.")
 
 }
-  
+
 
 function reset_options() {
 
@@ -77,12 +77,12 @@ function reset_options() {
 
 function load_options() {
 
-  chrome.storage.sync.get("settings",function (items) {
+  chrome.storage.sync.get("settings", function (items) {
 
     var globalStorage = {}
 
-    if ('{}' === JSON.stringify(items)){
-            
+    if ('{}' === JSON.stringify(items)) {
+
       /* 第一次运行设置 */
       debug("[Info][options] First run.")
 
@@ -98,8 +98,8 @@ function load_options() {
       document.getElementById('download_lesson').checked = true
 
       save_options()//强制保存一次默认设置
-  
-    }else{
+
+    } else {
 
       globalStorage = JSON.parse(items.settings)
       document.getElementById('default_apply').checked = globalStorage.enableBgMode
@@ -111,15 +111,15 @@ function load_options() {
       document.getElementById('add_signature').checked = globalStorage.enableSignature
       document.getElementById('signature').value = globalStorage.signatureText
       document.getElementById('download_lesson').checked = globalStorage.enableDownload
-      
-      
+
+
     }
 
     form_update()//异步加载
 
   })
 
-  
+
 
 }
 
@@ -136,7 +136,7 @@ var sText = document.getElementById("signature")
 var dlLesson = document.getElementById("download_lesson")
 
 document.getElementById('reset').addEventListener('click', function () {
-  
+
   reset_options()
   form_update()
 
@@ -149,8 +149,8 @@ document.addEventListener('DOMContentLoaded', load_options)
 var all_cbox = document.getElementsByClassName('cbox')
 
 for (let cboxid = 0; cboxid < all_cbox.length; cboxid++) {
-  
+
   all_cbox[cboxid].onclick = form_update
-  
+
 }
 
