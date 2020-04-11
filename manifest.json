@@ -1,7 +1,11 @@
 {
     "name": "教学立方辅助工具",
-    "version": "1.2",
+    "version": "2.0.1",
     "description": "天下苦教学立方久矣！做此插件以方便无论老师还是同学！",
+    "homepage_url":"https://ladderoperator.top/2020/04/02/teachingsquareassistant/",
+    "icons":{
+      "32":"logo.png"
+    },
 
     "background": {
       "persistent": false,
@@ -24,7 +28,8 @@
       "activeTab",
       "storage",
       "contextMenus",
-      "tabs"
+      "tabs",
+      "<all_urls>"
     ],
     "manifest_version": 2
 

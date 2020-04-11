@@ -13,7 +13,7 @@ function hasContentscripts() {
 function rmContentscripts() {
   var extension = chrome.runtime.id
   var script = document.querySelectorAll("script[src*=" + extension + "]") 
-  script[0].remove()
+  script[0].remove(script)
 }
 
 function injectScripts() {
@@ -51,6 +51,7 @@ function updateContentVar(message, sender, sendResponse){
 
     sendResponse(sender,"[Recv][contentscripts->background] I'm updated.")
     injectScripts()
+    
     
   }
 

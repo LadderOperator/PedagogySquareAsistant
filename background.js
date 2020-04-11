@@ -58,10 +58,37 @@ function clickMode(id) {
 function clickModeScript() {
 
     /* 点击模式 */
-
     /* 监听按钮点击事件，是对应网站则执行 */
 
-    chrome.browserAction.onClicked.addListener(setClickMode)
+    if (bgMode){
+        chrome.tabs.onUpdated.removeListener(setBgMode)
+        chrome.browserAction.onClicked.addListener(setClickMode)
+        bgMode = false
+    }
+
+    
+}
+
+function setBgMode(id, change, tab) {
+        
+    if (tab.active && checkURL(tab.url) && "complete" == change.status ){
+
+        chrome.storage.sync.get("settings", function (items) {
+
+            if ('{}' === JSON.stringify(items)) {
+
+                debug("[Info][background] No Settings.")
+
+            }else{
+    
+            debug("[Info][background] Load Settings.")
+            debug("[Info][background] Execute Content Scripts.")
+            chrome.tabs.executeScript(tab.id, { file: "contentscript.js",runAt :"document_end" })
+    
+            }
+        })
+    }
+
 }
 
 function backgroundMode(id) {
@@ -78,6 +105,13 @@ function backgroundMode(id) {
 function backgroundModeScript(id) {
 
     /* 背景模式 */
+
+    if (!bgMode){
+        chrome.browserAction.onClicked.removeListener(setClickMode)
+        chrome.tabs.onUpdated.addListener(setBgMode)
+        bgMode = true
+    }
+
     
 }
 
@@ -112,10 +146,15 @@ function loadSettings() {
 
                 debug("[Info][background] Click Mode.")
                 clickModeScript()
+                
 
             }else{
 
+                
                 debug("[Info][background] Background Mode.")
+                backgroundModeScript()
+                
+
             }
         }
     })
@@ -271,6 +310,16 @@ chrome.runtime.onInstalled.addListener(function (details) {
 })
 
 var globalDebugMode = true
+var bgMode
+var storage
 
 loadSettings()//载入
+
+chrome.storage.sync.get("settings", function (items) {
+
+    bgMode = JSON.parse(items.settings).enableBgMode
+
+    debug(bgMode)
+})
+
 setIcon()//设置图标规则

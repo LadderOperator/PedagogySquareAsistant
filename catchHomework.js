@@ -223,6 +223,9 @@ function collectRates() {
 }
 
 
+
+
+  
 var globalDebugMode = true
 
 var settings = JSON.parse(document.getElementById('opt_data').textContent)
@@ -325,8 +328,10 @@ if (currentURL.includes(TWorkStr)) {
 
 /* 学生功能，显示课件的下载按键 */
 
+
+
 function showDlBtn() {
-  var resource = lessonindex.lesson_list
+
   debug("捕捉到课件文件")
 
   var lesson_items = document.querySelectorAll("tbody > tr")
@@ -346,6 +351,8 @@ function checkPage() {
 }
 
 if (currentURL.includes(lessonStr)) {
+
+  var resource = lessonindex.lesson_list
 
   if (settings.enableDownload) {
     showDlBtn()
