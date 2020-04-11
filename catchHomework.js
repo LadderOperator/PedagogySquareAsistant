@@ -4,9 +4,19 @@ function debug(param) {
   }
 }
 
+/* function changeNext() {
+  if (0 < notMarkCount) {
+
+    var nextURL = document.URL.split("#")[0] + "#" + TWorkStr + "-id-" + hid.toString() + "-be_uid-" + nuid.toString()
+    document.querySelectorAll(".report-box-head > .pull-right > a").forEach(function (btn) {
+      btn.href = nextURL
+    }
+
+    )
+  }
+} */
 
 function getAttachment() {
-
 
   /* 
   获取页面的附件信息
@@ -67,15 +77,13 @@ function img2canvas() {
 
     /* 在canvas绘制图片内容 */
 
-    img2.onload = function () {
 
-      imgctx2 = this.parentElement.getContext('2d')
+    imgctx2 = img2.parentElement.getContext('2d')
 
-      this.parentElement.width = this.parentElement.parentElement.parentElement.offsetWidth
-      this.parentElement.height = this.parentElement.parentElement.parentElement.offsetWidth * this.height / this.width
-      imgctx2.drawImage(this, 0, 0, this.width, this.height, 0, 0, this.parentElement.width, this.parentElement.height)
+    img2.parentElement.width = img2.parentElement.parentElement.parentElement.offsetWidth
+    img2.parentElement.height = img2.parentElement.parentElement.parentElement.offsetWidth * img2.height / img2.width
+    imgctx2.drawImage(img2, 0, 0, img2.width, img2.height, 0, 0, img2.parentElement.width, img2.parentElement.height)
 
-    }
 
     imgCanvas.parentElement.insertBefore(document.createElement('br'), imgCanvas)
 
@@ -223,27 +231,54 @@ function hideSrvBtn() {
   kfButton.style.display = "none"
 }
 
-function collectRates() {
-  document.querySelector('.caozuo').addEventListener('click', function () {
-    var combinedRates = settings.enableSignature ? gatherRate.join('；') + signature : gatherRate.join('；')
-    if ("" == document.querySelector('.teacherRating-content > span > textarea').value.replace(/\s*/g, "")) {
-      document.querySelector('.teacherRating-content > span > textarea').value = combinedRates
-    }
+function fillRate() {
+  var combinedRates = settings.enableSignature ? gatherRate.join(' ') + signature : gatherRate.join(' ')
+  if ("" == document.querySelector('.teacherRating-content > span > textarea').value.replace(/\s*/g, "")) {
+    document.querySelector('.teacherRating-content > span > textarea').value = combinedRates
+  }
+}
 
-  })
+function collectRates() {
+
+    document.querySelector('.caozuo').addEventListener('click',fillRate )
+
+}
+
+function signOnly() {
+
+  if ("" == document.querySelector('.teacherRating-content > span > textarea').value.replace(/\s*/g, "")) {
+    document.querySelector('.teacherRating-content > span > textarea').value = signature
+  }
+
 }
 
 function sign() {
-document.querySelector('.caozuo').addEventListener('click', function () {
 
-    if ("" == document.querySelector('.teacherRating-content > span > textarea').value.replace(/\s*/g, "")) {
-      document.querySelector('.teacherRating-content > span > textarea').value = signature
-    }
-
-  })
+    document.querySelector('.caozuo').addEventListener('click', signOnly)
 
 }
 
+
+
+function showDlBtn() {
+
+  debug("捕捉到课件文件")
+
+  var lesson_items = document.querySelectorAll("tbody > tr")
+
+  for (let ri = 0; ri < resource.length; ri++) {
+    resource[ri].can_download = 1
+    lesson_url = lesson_items[ri].lastElementChild.lastElementChild
+    lesson_url.href = resource[ri].path
+  }
+}
+
+function checkPage() {
+  if (oldPage != parseInt(document.querySelector(".pagination .active").textContent)) {
+    showDlBtn()
+    oldPage = parseInt(document.querySelector(".pagination .active").textContent)
+  }
+}
 
 function mainPart() {
 
@@ -251,14 +286,16 @@ function mainPart() {
 /* 根据当前页面选择执行不同功能 */
 
 if (currentURL.includes(TWorkStr)) {
-/* 
+
   var signature = settings.signatureText
 
-  var gatherRate = []
-
-  var homeworkPara = homework.question_list
-  var questionCount = homeworkPara.length
-  var rateboxes = []
+  // var gatherRate = []
+  nuid = homework.next_uid
+  hid = homework.hid
+  notMarkCount = homework.not_mark_uids_arr.length
+  homeworkPara = homework.question_list
+  questionCount = homeworkPara.length
+/*   var rateboxes = []
   var gatherRate = []
 
   var fileLinks = []
@@ -317,8 +354,13 @@ if (currentURL.includes(TWorkStr)) {
   /* 为非图片替换原先的下载链接 */
 
   fileLinks.forEach(function (link) {
-    link[3].href = link[2]
-    link[3].target = '_blank'
+    try{
+      link[3].href = link[2]
+      link[3].target = '_blank'
+    } catch(errFile){
+        debug("[Info][injected] Maybe no file.")
+    }
+
   })
 
   /* 评阅按钮移动到底部 */
@@ -336,6 +378,8 @@ if (currentURL.includes(TWorkStr)) {
     sign()
   }
 
+  //changeNext()
+
   if (settings.enableHideSrv) {
     hideSrvBtn()
   }
@@ -345,26 +389,6 @@ if (currentURL.includes(TWorkStr)) {
 /* 学生功能，显示课件的下载按键 */
 
 
-
-function showDlBtn() {
-
-  debug("捕捉到课件文件")
-
-  var lesson_items = document.querySelectorAll("tbody > tr")
-
-  for (let ri = 0; ri < resource.length; ri++) {
-    resource[ri].can_download = 1
-    lesson_url = lesson_items[ri].lastElementChild.lastElementChild
-    lesson_url.href = resource[ri].path
-  }
-}
-
-function checkPage() {
-  if (oldPage != parseInt(document.querySelector(".pagination .active").textContent)) {
-    showDlBtn()
-    oldPage = parseInt(document.querySelector(".pagination .active").textContent)
-  }
-}
 
 if (currentURL.includes(lessonStr)) {
 
@@ -395,6 +419,9 @@ var signature = settings.signatureText
 var gatherRate = []
 var homeworkPara
 var questionCount
+var nuid
+var hid
+var notMarkCount
 var rateboxes = []
 var gatherRate = []
 var fileLinks = []
@@ -406,7 +433,8 @@ try {
   mainPart()
   debug("[Info] Done.")
 } catch (error) {
+  debug(error)
   debug("[Info] Wait.")
-  window.setTimeout(mainPart, 1000)
+  window.setTimeout(mainPart, 1500)
   debug("[Info] Done.")
 }

@@ -35,6 +35,7 @@ function setClickMode(tab) {
 
     } else {
 
+        commonMode(tab.id)
         debug("[Info][background] Only work on specific page.")
 
     }
@@ -85,6 +86,9 @@ function setBgMode(id, change, tab) {
 
             }
         })
+    }else{
+        commonMode(id)
+        debug("[Info][background] Only work on specific page.")
     }
 
 }

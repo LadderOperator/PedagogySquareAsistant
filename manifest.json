@@ -29,7 +29,7 @@
       "storage",
       "contextMenus",
       "tabs",
-      "<all_urls>"
+      "https://teaching.applysquare.com/*"
     ],
     "manifest_version": 2
 
