@@ -2,6 +2,9 @@
 
 项目地址：[LadderOperator/PedagogySquareAsistant](https://github.com/LadderOperator/PedagogySquareAsistant)
 
+CRX文件下载地址：[PedagogySquareAsistant](https://github.com/LadderOperator/PedagogySquareAsistant/releases/download/v2.0.1/PedagogySquareAsistant.crx)
+
+
  一键预览助教批改作业页面上传的图片等实用功能，同时可以把课件页面未放开的下载打开，方便网络环境实在坑爹的同学。
 
 > 所有课件均为任课老师的辛苦劳动付出，本插件使用者**仅可为了教学工作、课程学习方便之用，不得未经允许将课件在网络随意传播**！请珍惜老师的劳动成果和心血！（如果我发现任何一个人违反了这条，我会删去此功能）
@@ -17,6 +20,22 @@
 + 放开下载：直接注入js脚本从页面修改课件可下载的属性。
 
 ## 安装方式
+
+### 友好
+
+> 仅支持部分Chrome，或者Edge 81之后的版本。
+
+1. 下载发布的`.crx`文件。
+
+2. 打开Chrome或Chromium Edge浏览器，Chrome输入`chrome://extensions`，Edge输入`edge://extensions`
+
+3. 打开“开发人员模式”，chrome浏览器在页面右上角，Edge浏览器在页面左下角
+
+4. 将下载的`.crx`文件拖入插件页面，自动安装
+
+### 稳定
+
+> 不是很旧的版本大概率都可以用。
 
 1. 如果会使用git，使用`clone`到本地；如果不会使用git，选`Clone or download->Download ZIP`，将下载的`.zip`压缩包，解压成文件夹
 
