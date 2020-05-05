@@ -14,8 +14,7 @@
     },
 
     "browser_action": {
-      "default_icon": "logo.png",
-      "icons":"logo.png"
+      "default_icon": "logo.png"
     },
     "web_accessible_resources": [
       "catchHomework.js"
