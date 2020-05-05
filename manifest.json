@@ -3,8 +3,9 @@
     "version": "2.0.1",
     "description": "天下苦教学立方久矣！做此插件以方便无论老师还是同学！",
     "homepage_url":"https://ladderoperator.top/2020/04/02/pedagogysquareasistant/",
-    "icons":{
-      "32":"logo.png"
+    "icons": {
+      "256":"logo.png",
+      "48":"logo_48x48.png"
     },
 
     "background": {
@@ -14,7 +15,10 @@
     },
 
     "browser_action": {
-      "default_icon": "logo.png"
+      "default_icon": {
+        "256":"logo.png",
+        "48":"logo_48x48.png"
+      }
     },
     "web_accessible_resources": [
       "catchHomework.js"
