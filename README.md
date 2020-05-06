@@ -2,7 +2,7 @@
 
 项目地址：[LadderOperator/PedagogySquareAsistant](https://github.com/LadderOperator/PedagogySquareAsistant)
 
-CRX文件下载地址：[PedagogySquareAsistant](https://github.com/LadderOperator/PedagogySquareAsistant/releases/download/v2.0.1/PedagogySquareAsistant.crx)
+谷歌商店下载地址：[教学立方辅助工具](https://chrome.google.com/webstore/detail/%E6%95%99%E5%AD%A6%E7%AB%8B%E6%96%B9%E8%BE%85%E5%8A%A9%E5%B7%A5%E5%85%B7/dpcoadobjphddblobamffijbelbkidga)
 
 
  一键预览助教批改作业页面上传的图片等实用功能，同时可以把课件页面未放开的下载打开，方便网络环境实在坑爹的同学。
@@ -21,19 +21,18 @@ CRX文件下载地址：[PedagogySquareAsistant](https://github.com/LadderOperat
 
 ## 安装方式
 
-### 友好
+强烈推荐去商店下载，这样就不会有开发者模式的弹窗了。
 
-> 仅支持部分Chrome，或者Edge 81之后的版本。
+### 插件商店下载
 
-1. 下载发布的`.crx`文件。
+> 支持Chrome和Chromium Edge (新版Edge)，但是要科学地去上网。
 
-2. 打开Chrome或Chromium Edge浏览器，Chrome输入`chrome://extensions`，Edge输入`edge://extensions`
+1. 前往[教学立方辅助工具](https://chrome.google.com/webstore/detail/%E6%95%99%E5%AD%A6%E7%AB%8B%E6%96%B9%E8%BE%85%E5%8A%A9%E5%B7%A5%E5%85%B7/dpcoadobjphddblobamffijbelbkidga)；
 
-3. 打开“开发人员模式”，chrome浏览器在页面右上角，Edge浏览器在页面左下角
+2. 安装，结束。
 
-4. 将下载的`.crx`文件拖入插件页面，自动安装
 
-### 稳定
+### 加载压缩包方式
 
 > 不是很旧的版本大概率都可以用。
 
@@ -51,11 +50,11 @@ CRX文件下载地址：[PedagogySquareAsistant](https://github.com/LadderOperat
 
 ### 通用
 
-+ **开启背景模式**：（Experimental）开启后，无需点击插件图标，网页加载完毕后自动应用功能
++ **开启背景模式**：（Experimental）开启后，无需点击插件图标，网页加载完毕后自动应用功能。图片较大或网页加载策略特殊时可能会失效，大概率和网络加载速度有关，建议一般还是使用点击模式。
 
 > **👍点击模式**：推荐模式，沿袭了最初的插件版本。打开教学立方作业批改页面或课件列表，此时插件显示“Click”，点击插件图标。
 
-> **🧪背景模式**：此为懒人实验性功能，**图片较大时可能会偶尔失效**，大概率和网络加载速度有关，网络不好建议还是使用点击模式。打开教学立方作业批改页面或课件列表，此时插件显示“On”，无需做任何动作。
+> **🧪背景模式**：此为懒人实验性功能，。打开教学立方作业批改页面或课件列表，此时插件显示“On”，无需做任何动作。
 
 + **隐藏客服按钮**：开启后，将隐藏界面上悬浮客服按钮的遮挡
 
