@@ -268,8 +268,10 @@ function showDlBtn() {
 
   for (let ri = 0; ri < resource.length; ri++) {
     resource[ri].can_download = 1
-    lesson_url = lesson_items[ri].lastElementChild.lastElementChild
-    lesson_url.href = "javascript:window.open(" + resource[ri].path + ")"
+    if (settings.enableDownload){
+      lesson_url = lesson_items[ri].lastElementChild.lastElementChild
+      lesson_url.href = resource[ri].path
+    }
   }
 }
 
@@ -353,14 +355,14 @@ if (currentURL.includes(TWorkStr)) {
 
   /* 为非图片替换原先的下载链接 */
 
-  fileLinks.forEach(function (link) {
-    try{
-      link[3].href = "javascript:window.open(" + link[2] +")"
-    } catch(errFile){
-        debug("[Info][injected] Maybe no file.")
-    }
+  // fileLinks.forEach(function (link) {
+  //   try{
+  //     link[3].href = "javascript:window.open(" + link[2] +")"
+  //   } catch(errFile){
+  //       debug("[Info][injected] Maybe no file.")
+  //   }
 
-  })
+  // })
 
   /* 评阅按钮移动到底部 */
 
@@ -393,7 +395,7 @@ if (currentURL.includes(lessonStr)) {
 
   resource = lessonindex.lesson_list
 
-  if (settings.enableDownload) {
+  if (true) {
     showDlBtn()
     var interval = 100;
     oldPage = parseInt(document.querySelector(".pagination .active").textContent)//获取当前列表页
