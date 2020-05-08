@@ -6,15 +6,18 @@ function debug(param) {
 
 function hasContentscripts() {
   var extension = chrome.runtime.id
-  var script = document.querySelectorAll("script[src*=" + extension + "]")
+  var script = document.querySelectorAll("script[src*='" + extension + "']")
+  //debug(script)
   return script.length > 0
 }
 
-function rmContentscripts() {
-  var extension = chrome.runtime.id
-  var script = document.querySelectorAll("script[src*=" + extension + "]")
-  script[0].remove(script)
-}
+// function rmContentscripts() {
+//   var extension = chrome.runtime.id
+//   var script = document.querySelector("script[src*='" + extension + "']")
+//   var pdata = document.querySelector("p#opt_data")
+//   script.remove()
+//   pdata.remove()
+// }
 
 function injectScripts() {
 
@@ -71,10 +74,7 @@ var globalDebugMode = true
 
 if (hasContentscripts()) {
 
-  debug("[Info] Already run, do again.")
-  rmContentscripts()
-  reqBgUpdate()
-  chrome.runtime.onMessage.addListener(updateContentVar)
+  debug("[Info] Already run, please refresh.")
 
 } else {
 
