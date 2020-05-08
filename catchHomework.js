@@ -269,7 +269,7 @@ function showDlBtn() {
   for (let ri = 0; ri < resource.length; ri++) {
     resource[ri].can_download = 1
     lesson_url = lesson_items[ri].lastElementChild.lastElementChild
-    lesson_url.href = resource[ri].path
+    lesson_url.href = "javascript:window.open(" + resource[ri].path + ")"
   }
 }
 
@@ -355,8 +355,7 @@ if (currentURL.includes(TWorkStr)) {
 
   fileLinks.forEach(function (link) {
     try{
-      link[3].href = link[2]
-      link[3].target = '_blank'
+      link[3].href = "javascript:window.open(" + link[2] +")"
     } catch(errFile){
         debug("[Info][injected] Maybe no file.")
     }
