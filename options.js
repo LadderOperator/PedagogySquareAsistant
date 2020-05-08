@@ -67,7 +67,7 @@ function reset_options() {
   document.getElementById('use_ratebox').checked = false
   document.getElementById('add_signature').checked = false
   document.getElementById('signature').value = "（张三 批改）"
-  document.getElementById('download_lesson').checked = true
+  document.getElementById('download_lesson').checked = false
 
   debug("[Info][options] Reset settings.")
 
@@ -95,7 +95,7 @@ function load_options() {
       document.getElementById('use_ratebox').checked = false
       document.getElementById('add_signature').checked = false
       document.getElementById('signature').value = "（张三 批改）"
-      document.getElementById('download_lesson').checked = true
+      document.getElementById('download_lesson').checked = false
 
       save_options()//强制保存一次默认设置
 
