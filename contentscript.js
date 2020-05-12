@@ -56,6 +56,8 @@ function updateContentVar(message, sender, sendResponse) {
       sendResponse(sender, "[Recv][contentscripts->background] I'm updated.")
       
       injectScripts()
+      chrome.runtime.onMessage.removeListener(updateContentVar)
+      //debug("[Info] Remove listener for updating.")
     }
 
 }
@@ -78,8 +80,14 @@ if (hasContentscripts()) {
 
 } else {
 
+  
+  if (!chrome.runtime.onMessage.hasListener(updateContentVar)) {
+    
+    chrome.runtime.onMessage.addListener(updateContentVar)
+    //debug("[Info] Set listener for updating.")
+  }
+  
   reqBgUpdate()
-  chrome.runtime.onMessage.addListener(updateContentVar)
 
 }
 
