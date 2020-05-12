@@ -34,7 +34,7 @@ function injectScripts() {
 
     var s = document.createElement('script')
     s.src = chrome.runtime.getURL('catchHomework.js')
-    document.getElementsByTagName('body')[0].appendChild(s)
+    document.querySelector('div#content_right').appendChild(s)
 
     chrome.runtime.sendMessage("done", function (response) {
 
