@@ -167,7 +167,7 @@ function addImgRateBox(imgCanvas) {
 
   var inbox2 = document.createElement('textarea')
   inbox2.className = 'ratebox'
-  inbox2.placeholder = '点击可以在这里记录本题评语！'
+  inbox2.placeholder = '点击可以在这里记录本题评语，评语会最终汇总到总评里'
   inbox2.rows = 2
   inbox2.style.width = "100%"
   inbox2.addEventListener('change', function () {
@@ -218,6 +218,33 @@ function showPreviewImg(link) {
   if (settings.enableRateBox) {
     addImgRateBox(canvas)
   }
+}
+
+function addFloatRatebox() {
+
+  var insertNode = document.querySelector("div.report-box-head")
+  var inbox2 = document.createElement('textarea')
+  inbox2.className = 'ratebox'
+  inbox2.id = "float-ratebox"
+  inbox2.placeholder = '这里是浮动评语框，点击可以在这里随时记录想写的评语，同样会最终汇总到总评'
+  inbox2.rows = 2
+  inbox2.style.position = "fixed"
+  inbox2.style.width = "60%"
+  inbox2.style.bottom = "0px"
+  inbox2.style.left = "0px"
+  inbox2.style.margin = "0 20% 0 20%"
+  inbox2.style.border = "black 2px solid"
+  inbox2.style.zIndex = "100"
+  inbox2.addEventListener('change', function () {
+    rateboxes = document.getElementsByClassName('ratebox')
+    gatherRate = []
+    for (let boxid = 0; boxid < rateboxes.length; boxid++) {
+      gatherRate.push(rateboxes[boxid].value)
+    }
+
+  })
+  insertNode.parentNode.insertBefore(inbox2, insertNode.nextSibling)
+  
 }
 
 function moveRateButton() {
@@ -352,6 +379,9 @@ if (currentURL.includes(TWorkStr)) {
 
 
   })
+  if (settings.enableRateBox) {
+    addFloatRatebox()
+  }
 
   /* 为非图片替换原先的下载链接 */
 
