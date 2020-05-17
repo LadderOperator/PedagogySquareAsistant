@@ -222,19 +222,15 @@ function showPreviewImg(link) {
 
 function addFloatRatebox() {
 
-  var insertNode = document.querySelector("div.report-box-head")
+  var insertNode = document.querySelector(".caozuo a")
   var inbox2 = document.createElement('textarea')
   inbox2.className = 'ratebox'
   inbox2.id = "float-ratebox"
   inbox2.placeholder = '这里是浮动评语框，点击可以在这里随时记录想写的评语，同样会最终汇总到总评'
   inbox2.rows = 2
-  inbox2.style.position = "fixed"
-  inbox2.style.width = "60%"
-  inbox2.style.bottom = "0px"
-  inbox2.style.left = "0px"
-  inbox2.style.margin = "0 20% 0 20%"
+  inbox2.style.width = "90%"
+  inbox2.style.float = "left"
   inbox2.style.border = "black 2px solid"
-  inbox2.style.zIndex = "100"
   inbox2.addEventListener('change', function () {
     rateboxes = document.getElementsByClassName('ratebox')
     gatherRate = []
@@ -243,13 +239,27 @@ function addFloatRatebox() {
     }
 
   })
-  insertNode.parentNode.insertBefore(inbox2, insertNode.nextSibling)
+  insertNode.parentNode.insertBefore(inbox2, insertNode)
   
 }
 
 function moveRateButton() {
   var rateStyle = document.createElement('style')
-  rateStyle.innerHTML = ".caozuo { position:static!important; right:0px!important; top:0px!important;text-align: right!important}"
+  rateStyle.innerHTML = 
+  ".caozuo {\
+    background:rgba(255,255,255,0.6);\
+    position:fixed!important;\
+    left:0px!important;\
+    right:unset!important;\
+    top:unset!important;\
+    bottom:0px!important;\
+    text-align:right!important;\
+    height:fit-content;\
+    margin:0px 20% 0px 20%;\
+    width:70%;\
+    z-index:100;\
+    padding:10px;\
+  }"
   document.head.appendChild(rateStyle)
 }
 
@@ -379,7 +389,7 @@ if (currentURL.includes(TWorkStr)) {
 
 
   })
-  if (settings.enableRateBox) {
+  if (settings.enableRateBox && settings.enableMoveRate) {
     addFloatRatebox()
   }
 
