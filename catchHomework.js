@@ -167,7 +167,7 @@ function addImgRateBox(imgCanvas) {
 
   var inbox2 = document.createElement('textarea')
   inbox2.className = 'ratebox'
-  inbox2.placeholder = '点击可以在这里记录本题评语！'
+  inbox2.placeholder = '点击可以在这里记录本题评语，评语会最终汇总到总评里'
   inbox2.rows = 2
   inbox2.style.width = "100%"
   inbox2.addEventListener('change', function () {
@@ -220,9 +220,46 @@ function showPreviewImg(link) {
   }
 }
 
+function addFloatRatebox() {
+
+  var insertNode = document.querySelector(".caozuo a")
+  var inbox2 = document.createElement('textarea')
+  inbox2.className = 'ratebox'
+  inbox2.id = "float-ratebox"
+  inbox2.placeholder = '这里是浮动评语框，点击可以在这里随时记录想写的评语，同样会最终汇总到总评'
+  inbox2.rows = 2
+  inbox2.style.width = "90%"
+  inbox2.style.float = "left"
+  inbox2.style.border = "black 2px solid"
+  inbox2.addEventListener('change', function () {
+    rateboxes = document.getElementsByClassName('ratebox')
+    gatherRate = []
+    for (let boxid = 0; boxid < rateboxes.length; boxid++) {
+      gatherRate.push(rateboxes[boxid].value)
+    }
+
+  })
+  insertNode.parentNode.insertBefore(inbox2, insertNode)
+  
+}
+
 function moveRateButton() {
   var rateStyle = document.createElement('style')
-  rateStyle.innerHTML = ".caozuo { position:static!important; right:0px!important; top:0px!important;text-align: right!important}"
+  rateStyle.innerHTML = 
+  ".caozuo {\
+    background:rgba(255,255,255,0.6);\
+    position:fixed!important;\
+    left:0px!important;\
+    right:unset!important;\
+    top:unset!important;\
+    bottom:0px!important;\
+    text-align:right!important;\
+    height:fit-content;\
+    margin:0px 20% 0px 20%;\
+    width:70%;\
+    z-index:100;\
+    padding:10px;\
+  }"
   document.head.appendChild(rateStyle)
 }
 
@@ -258,28 +295,69 @@ function sign() {
 
 }
 
+function gatherNoteLinks() {
+  document.getElementById("cpyInput").value = noteLinks.join("\n")
+  document.getElementById("cpyInput").select()
+  debug("已选中")
+  document.execCommand("copy")
+  alert("已复制至剪贴板，可以粘贴到批量下载工具如迅雷使用！")
+}
 
+function showCpyAll() {
+  var tp = document.getElementById("table_points")
+  var copyAllLinks = document.createElement("button")
+  var copyArea = document.createElement("textArea")
+
+  tp.appendChild(copyAllLinks)
+  tp.appendChild(copyArea)
+
+  copyArea.id = "cpyInput"
+  copyArea.style.width = "100%"
+  copyArea.style.zIndex = "-100"
+  copyArea.style.position = "fixed"
+
+  copyAllLinks.id = "copyBtn"
+  copyAllLinks.style.margin = "10px"
+  copyAllLinks.style.zIndex = "100"
+  copyAllLinks.style.position = "fixed"
+  copyAllLinks.style.bottom = "0"
+  copyAllLinks.style.right = "0"
+  copyAllLinks.innerText = "点击复制本页下载链接"
+  copyAllLinks.title = "点击后可以将所有链接复制到粘贴板，粘贴至各类下载工具可以实现批量下载，无需另装插件"
+  copyAllLinks.onclick = gatherNoteLinks
+}
 
 function showDlBtn() {
 
-  debug("捕捉到课件文件")
-
+  noteLinks = [] //清空收集
   var lesson_items = document.querySelectorAll("tbody > tr")
 
   for (let ri = 0; ri < resource.length; ri++) {
     resource[ri].can_download = 1
+    if ("dir" == resource[ri].ext){
+      continue
+    }
     if (settings.enableDownload){
       lesson_url = lesson_items[ri].lastElementChild.lastElementChild
       lesson_url.href = resource[ri].path
+      noteLinks.push(resource[ri].path)
+
     }
   }
+
+  debug("捕捉到课件文件")
+
 }
 
 function checkPage() {
-  if (oldPage != parseInt(document.querySelector(".pagination .active").textContent)) {
-    showDlBtn()
-    oldPage = parseInt(document.querySelector(".pagination .active").textContent)
+  if (0 < document.querySelectorAll(".pagination").length){
+    if (oldPage != parseInt(document.querySelector(".pagination .active").textContent)) {
+      showDlBtn()
+      showCpyAll()
+      oldPage = parseInt(document.querySelector(".pagination .active").textContent)
+    }
   }
+
 }
 
 function mainPart() {
@@ -352,6 +430,9 @@ if (currentURL.includes(TWorkStr)) {
 
 
   })
+  if (settings.enableRateBox && settings.enableMoveRate) {
+    addFloatRatebox()
+  }
 
   /* 为非图片替换原先的下载链接 */
 
@@ -397,8 +478,11 @@ if (currentURL.includes(lessonStr)) {
 
   if (true) {
     showDlBtn()
+    showCpyAll()
     var interval = 100;
-    oldPage = parseInt(document.querySelector(".pagination .active").textContent)//获取当前列表页
+    if (0 < document.querySelectorAll(".pagination").length){
+      oldPage = parseInt(document.querySelector(".pagination .active").textContent)//获取当前列表页
+    }
     window.setInterval(checkPage, interval)//间隔判断当期页面是否发生改变
   }
 
@@ -431,6 +515,7 @@ var attachElements
 var imgInserted
 var resource 
 var oldPage
+var noteLinks = []
 
 try {
   mainPart()

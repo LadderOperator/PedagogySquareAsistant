@@ -34,7 +34,7 @@ function injectScripts() {
 
     var s = document.createElement('script')
     s.src = chrome.runtime.getURL('catchHomework.js')
-    document.getElementsByTagName('body')[0].appendChild(s)
+    document.querySelector('div#content_right').appendChild(s)
 
     chrome.runtime.sendMessage("done", function (response) {
 
@@ -56,6 +56,8 @@ function updateContentVar(message, sender, sendResponse) {
       sendResponse(sender, "[Recv][contentscripts->background] I'm updated.")
       
       injectScripts()
+      chrome.runtime.onMessage.removeListener(updateContentVar)
+      //debug("[Info] Remove listener for updating.")
     }
 
 }
@@ -78,8 +80,14 @@ if (hasContentscripts()) {
 
 } else {
 
+  
+  if (!chrome.runtime.onMessage.hasListener(updateContentVar)) {
+    
+    chrome.runtime.onMessage.addListener(updateContentVar)
+    //debug("[Info] Set listener for updating.")
+  }
+  
   reqBgUpdate()
-  chrome.runtime.onMessage.addListener(updateContentVar)
 
 }
 

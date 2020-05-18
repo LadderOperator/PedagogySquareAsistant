@@ -63,7 +63,9 @@ function clickModeScript() {
     if (chrome.tabs.onUpdated.hasListener(setBgMode)) {
         chrome.tabs.onUpdated.removeListener(setBgMode)
     }
-
+    if (chrome.tabs.onUpdated.hasListener(setClickMode)) {
+        chrome.tabs.onUpdated.removeListener(setClickMode)
+    }
     chrome.browserAction.onClicked.addListener(setClickMode)
     bgMode = false
 }
@@ -108,8 +110,11 @@ function backgroundModeScript(id) {
 
     /* 背景模式 */
 
-    if (chrome.browserAction.onClicked.hasListener(setClickMode)) {
-        chrome.browserAction.onClicked.removeListener(setClickMode)
+    if (chrome.tabs.onUpdated.hasListener(setBgMode)) {
+        chrome.tabs.onUpdated.removeListener(setBgMode)
+    }
+    if (chrome.tabs.onUpdated.hasListener(setClickMode)) {
+        chrome.tabs.onUpdated.removeListener(setClickMode)
     }
     chrome.tabs.onUpdated.addListener(setBgMode)
 
