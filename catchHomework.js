@@ -480,7 +480,9 @@ if (currentURL.includes(lessonStr)) {
     showDlBtn()
     showCpyAll()
     var interval = 100;
-    oldPage = parseInt(document.querySelector(".pagination .active").textContent)//获取当前列表页
+    if (0 < document.querySelectorAll(".pagination").length){
+      oldPage = parseInt(document.querySelector(".pagination .active").textContent)//获取当前列表页
+    }
     window.setInterval(checkPage, interval)//间隔判断当期页面是否发生改变
   }
 
