@@ -295,28 +295,69 @@ function sign() {
 
 }
 
+function gatherNoteLinks() {
+  document.getElementById("cpyInput").value = noteLinks.join("\n")
+  document.getElementById("cpyInput").select()
+  debug("已选中")
+  document.execCommand("copy")
+  alert("已复制至剪贴板，可以粘贴到批量下载工具如迅雷使用！")
+}
 
+function showCpyAll() {
+  var tp = document.getElementById("table_points")
+  var copyAllLinks = document.createElement("button")
+  var copyArea = document.createElement("textArea")
+
+  tp.appendChild(copyAllLinks)
+  tp.appendChild(copyArea)
+
+  copyArea.id = "cpyInput"
+  copyArea.style.width = "100%"
+  copyArea.style.zIndex = "-100"
+  copyArea.style.position = "fixed"
+
+  copyAllLinks.id = "copyBtn"
+  copyAllLinks.style.margin = "10px"
+  copyAllLinks.style.zIndex = "100"
+  copyAllLinks.style.position = "fixed"
+  copyAllLinks.style.bottom = "0"
+  copyAllLinks.style.right = "0"
+  copyAllLinks.innerText = "点击复制本页下载链接"
+  copyAllLinks.title = "点击后可以将所有链接复制到粘贴板，粘贴至各类下载工具可以实现批量下载，无需另装插件"
+  copyAllLinks.onclick = gatherNoteLinks
+}
 
 function showDlBtn() {
 
-  debug("捕捉到课件文件")
-
+  noteLinks = [] //清空收集
   var lesson_items = document.querySelectorAll("tbody > tr")
 
   for (let ri = 0; ri < resource.length; ri++) {
     resource[ri].can_download = 1
+    if ("dir" == resource[ri].ext){
+      continue
+    }
     if (settings.enableDownload){
       lesson_url = lesson_items[ri].lastElementChild.lastElementChild
       lesson_url.href = resource[ri].path
+      noteLinks.push(resource[ri].path)
+
     }
   }
+
+  debug("捕捉到课件文件")
+
 }
 
 function checkPage() {
-  if (oldPage != parseInt(document.querySelector(".pagination .active").textContent)) {
-    showDlBtn()
-    oldPage = parseInt(document.querySelector(".pagination .active").textContent)
+  if (0 < document.querySelectorAll(".pagination").length){
+    if (oldPage != parseInt(document.querySelector(".pagination .active").textContent)) {
+      showDlBtn()
+      showCpyAll()
+      oldPage = parseInt(document.querySelector(".pagination .active").textContent)
+    }
   }
+
 }
 
 function mainPart() {
@@ -437,6 +478,7 @@ if (currentURL.includes(lessonStr)) {
 
   if (true) {
     showDlBtn()
+    showCpyAll()
     var interval = 100;
     oldPage = parseInt(document.querySelector(".pagination .active").textContent)//获取当前列表页
     window.setInterval(checkPage, interval)//间隔判断当期页面是否发生改变
@@ -471,6 +513,7 @@ var attachElements
 var imgInserted
 var resource 
 var oldPage
+var noteLinks = []
 
 try {
   mainPart()
