@@ -1,7 +1,7 @@
 {
     "name": "教学立方辅助工具",
     "version": "2.1.0",
-    "description": "天下苦教学立方久矣！做此插件以方便无论老师还是同学！",
+    "description": "适用于教学立方（PedagogySquare）的文件下载、作业批改辅助增强工具",
     "homepage_url":"https://ladderoperator.top/2020/04/02/pedagogysquareasistant/",
     "icons": {
       "256":"logo.png",
