@@ -2,7 +2,7 @@
 
 项目地址：[LadderOperator/PedagogySquareAsistant](https://github.com/LadderOperator/PedagogySquareAsistant)
 
-谷歌商店下载地址：[教学立方辅助工具](https://chrome.google.com/webstore/detail/%E6%95%99%E5%AD%A6%E7%AB%8B%E6%96%B9%E8%BE%85%E5%8A%A9%E5%B7%A5%E5%85%B7/dpcoadobjphddblobamffijbelbkidga)
+谷歌商店下载地址（注：Google商店无限延迟更新，Edge已经上架，请在Edge商店搜索）：[教学立方辅助工具](https://chrome.google.com/webstore/detail/%E6%95%99%E5%AD%A6%E7%AB%8B%E6%96%B9%E8%BE%85%E5%8A%A9%E5%B7%A5%E5%85%B7/dpcoadobjphddblobamffijbelbkidga)
 
 
  一键预览助教批改作业页面上传的图片等实用功能，同时可以把课件下载链接替换为真实链接以供全页下载。
