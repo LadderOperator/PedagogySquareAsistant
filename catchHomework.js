@@ -334,15 +334,15 @@ function showDlBtn() {
 
   for (let ri = 0; ri < resource.length; ri++) {
     resource[ri].can_download = 1
-    if ("dir" == resource[ri].ext){
+     if ("dir" == resource[ri].ext){
       continue
-    }
-    if (settings.enableDownload){
-      lesson_url = lesson_items[ri].lastElementChild.lastElementChild
-      lesson_url.href = resource[ri].path
+    } 
+     if (settings.enableDownload){
+      // lesson_url = lesson_items[ri].lastElementChild.lastElementChild
+      // lesson_url.href = resource[ri].path
       noteLinks.push(resource[ri].path)
 
-    }
+    } 
   }
 
   debug("捕捉到课件文件")
@@ -353,7 +353,9 @@ function checkPage() {
   if (0 < document.querySelectorAll(".pagination").length){
     if (oldPage != parseInt(document.querySelector(".pagination .active").textContent)) {
       showDlBtn()
-      showCpyAll()
+      if (settings.enableDownload){
+        showCpyAll()
+      }
       oldPage = parseInt(document.querySelector(".pagination .active").textContent)
     }
   }
@@ -478,7 +480,9 @@ if (currentURL.includes(lessonStr)) {
 
   if (true) {
     showDlBtn()
-    showCpyAll()
+    if (settings.enableDownload){
+      showCpyAll()
+    }
     var interval = 100;
     if (0 < document.querySelectorAll(".pagination").length){
       oldPage = parseInt(document.querySelector(".pagination .active").textContent)//获取当前列表页
