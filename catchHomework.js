@@ -170,14 +170,14 @@ function addImgRateBox(imgCanvas) {
   inbox2.placeholder = '点击可以在这里记录本题评语，评语会最终汇总到总评里'
   inbox2.rows = 2
   inbox2.style.width = "100%"
-  inbox2.addEventListener('change', function () {
-    rateboxes = document.getElementsByClassName('ratebox')
-    gatherRate = []
-    for (let boxid = 0; boxid < rateboxes.length; boxid++) {
-      gatherRate.push(rateboxes[boxid].value)
-    }
+  // inbox2.addEventListener('change', function () {
+  //   rateboxes = document.getElementsByClassName('ratebox')
+  //   gatherRate = []
+  //   for (let boxid = 0; boxid < rateboxes.length; boxid++) {
+  //     gatherRate.push(rateboxes[boxid].value)
+  //   }
 
-  })
+  // })
   imgCanvas.parentNode.insertBefore(inbox2, imgCanvas.nextSibling)
   imgCanvas.parentElement.insertBefore(document.createElement('br'), imgCanvas.nextSibling)
 }
@@ -223,6 +223,7 @@ function showPreviewImg(link) {
 function addFloatRatebox() {
 
   var insertNode = document.querySelector(".caozuo a")
+
   var inbox2 = document.createElement('textarea')
   inbox2.className = 'ratebox'
   inbox2.id = "float-ratebox"
@@ -231,20 +232,21 @@ function addFloatRatebox() {
   inbox2.style.width = "90%"
   inbox2.style.float = "left"
   inbox2.style.border = "black 2px solid"
-  inbox2.addEventListener('change', function () {
-    rateboxes = document.getElementsByClassName('ratebox')
-    gatherRate = []
-    for (let boxid = 0; boxid < rateboxes.length; boxid++) {
-      gatherRate.push(rateboxes[boxid].value)
-    }
+  insertNode.parentNode.appendChild(inbox2)
+  // inbox2.addEventListener('change', function () {
+  //   rateboxes = document.getElementsByClassName('ratebox')
+  //   gatherRate = []
+  //   for (let boxid = 0; boxid < rateboxes.length; boxid++) {
+  //     gatherRate.push(rateboxes[boxid].value)
+  //   }
 
-  })
-  insertNode.parentNode.insertBefore(inbox2, insertNode)
+  // })
   
 }
 
 function moveRateButton() {
   var rateStyle = document.createElement('style')
+  var insertNode = document.querySelector(".caozuo a")
   rateStyle.innerHTML = 
   ".caozuo {\
     background:rgba(255,255,255,0.6);\
@@ -260,7 +262,7 @@ function moveRateButton() {
     z-index:100;\
     padding:10px;\
   }"
-  document.head.appendChild(rateStyle)
+  insertNode.parentNode.insertBefore(rateStyle, insertNode)
 }
 
 function hideSrvBtn() {
@@ -269,6 +271,11 @@ function hideSrvBtn() {
 }
 
 function fillRate() {
+  rateboxes = document.getElementsByClassName('ratebox')
+  gatherRate = []
+  for (let boxid = 0; boxid < rateboxes.length; boxid++) {
+      gatherRate.push(rateboxes[boxid].value)
+    }
   var combinedRates = settings.enableSignature ? gatherRate.join(' ') + signature : gatherRate.join(' ')
   if ("" == document.querySelector('.teacherRating-content > span > textarea').value.replace(/\s*/g, "")) {
     document.querySelector('.teacherRating-content > span > textarea').value = combinedRates
